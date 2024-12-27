@@ -2,9 +2,17 @@
 //
 
 #include <iostream>
+#include <GLFW/glfw3.h>
 
 int main()
 {
+    // Initialize Windowing System
+    if (!glfwInit())
+    {
+        std::cout << "Init error!";
+        exit(-1);
+    }
+
     std::cout << "Hello World!\n";
     return 0;
 }
