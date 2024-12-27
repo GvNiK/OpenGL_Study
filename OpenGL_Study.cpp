@@ -6,6 +6,8 @@
 
 int main()
 {
+    GLFWwindow* window;
+
     // Initialize Windowing System
     if (!glfwInit())
     {
@@ -13,8 +15,34 @@ int main()
         exit(-1);
     }
 
-    std::cout << "Hello World!\n";
-    return 0;
+    // Create a new window
+    window = glfwCreateWindow(800, 600, "Hello", 0, 0);
+    // If Window creation fails then terminate the process and return.
+    if (!window)
+    {
+        std::cout << "Window creation failed!";
+        glfwTerminate();
+        return - 1;
+    }
+
+    // Each OpenGL application has its state withint its context. 
+    // So we need to associate the current window with the current context.
+    glfwMakeContextCurrent(window);
+
+    // Render loop
+    while (!glfwWindowShouldClose(window))
+    {
+        glClearColor(1.0, 0.0, 0.0, 0.0);
+
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        glfwSwapBuffers(window);
+
+        // For calling events
+        glfwPollEvents();
+    }
+
+    glfwTerminate();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
