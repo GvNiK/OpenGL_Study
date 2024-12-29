@@ -3,6 +3,13 @@
 
 #include <iostream>
 #include <GLFW/glfw3.h>
+#include <math.h>
+
+const int steps = 10;
+// Area of a Circle / Number of Steps.
+// 360 (in Degrees) / 10.
+const float angle = 2 * 3.14 / steps;
+
 
 int main()
 {
@@ -29,6 +36,8 @@ int main()
     // So we need to associate the current window with the current context.
     glfwMakeContextCurrent(window);
 
+    float xPos = 0, yPos = 0, radius = 1;
+
     // Render loop
     while (!glfwWindowShouldClose(window))
     {
@@ -37,21 +46,28 @@ int main()
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // Draw Traingles
-        glBegin(GL_TRIANGLES);
+        float prevX = xPos;
+        float prevY = yPos;// -radius;
 
-        // Color
-        glColor3f(1, 0, 0);
-        // Vertex
-        glVertex3f(-0.6f, -0.4f, 0.0f);
+        for (int i = 0; i <= steps; i++)
+        {
+            // Calculate angles
+            float newX = radius * sin(angle * i);
+            float newY = radius * cos(angle * i);
 
-        glColor3f(0, 1, 0);
-        glVertex3f(0.6, -0.4f, 0.0f);
-
-        glColor3f(0, 0, 1);
-        glVertex3f(0.0f, 0.6f, 0.0f);
-
-        glEnd();
+            // Draw Traignles
+            glBegin(GL_TRIANGLES);
+            glColor3f(0, 1, 0);
+            // We always need a starting point (starting from 0)
+            glVertex3f(0, 0, 0);
+            // We need a reference to a previous point 
+            glVertex3f(prevX, prevY, 0);
+            // We get the new point
+            glVertex3f(newX, newY, 0);
+            glEnd();
+            prevX = newX;
+            prevY = newY;
+        }
 
         // Responsible for swapping the front and back buffers of a window.
         // Displays the fully rendered frame by swapping the front and back buffers.
