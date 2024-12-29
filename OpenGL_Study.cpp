@@ -29,20 +29,35 @@ int main()
     // So we need to associate the current window with the current context.
     glfwMakeContextCurrent(window);
 
+    bool toggle = false;
+
     // Render loop
     while (!glfwWindowShouldClose(window))
     {
-        glClearColor(1.0, 0.0, 0.0, 0.0);
+        if (toggle)
+            // Clear any previous frames and create a new one
+            glClearColor(1.0, 0.0, 0.0, 0.0);
+        else
+            glClearColor(0, 1.0, 0, 0);
 
+        toggle = !toggle;
+
+        // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT);
 
+        // Responsible for swapping the front and back buffers of a window.
+        // Displays the fully rendered frame by swapping the front and back buffers.
         glfwSwapBuffers(window);
 
-        // For calling events
+        // Process and respond to events.
         glfwPollEvents();
     }
 
+    glfwDestroyWindow(window); 
     glfwTerminate();
+
+    // Executed Successfully.
+    return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
