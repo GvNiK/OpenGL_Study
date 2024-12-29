@@ -29,21 +29,29 @@ int main()
     // So we need to associate the current window with the current context.
     glfwMakeContextCurrent(window);
 
-    bool toggle = false;
-
     // Render loop
     while (!glfwWindowShouldClose(window))
     {
-        if (toggle)
-            // Clear any previous frames and create a new one
-            glClearColor(1.0, 0.0, 0.0, 0.0);
-        else
-            glClearColor(0, 1.0, 0, 0);
-
-        toggle = !toggle;
+        glClearColor(1, 1, 1, 1);
 
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT);
+
+        // Draw Traingles
+        glBegin(GL_TRIANGLES);
+
+        // Color
+        glColor3f(1, 0, 0);
+        // Vertex
+        glVertex3f(-0.6f, -0.4f, 0.0f);
+
+        glColor3f(0, 1, 0);
+        glVertex3f(0.6, -0.4f, 0.0f);
+
+        glColor3f(0, 0, 1);
+        glVertex3f(0.0f, 0.6f, 0.0f);
+
+        glEnd();
 
         // Responsible for swapping the front and back buffers of a window.
         // Displays the fully rendered frame by swapping the front and back buffers.
