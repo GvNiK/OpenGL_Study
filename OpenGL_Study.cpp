@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <math.h>
 #include "CircleApproximation.cpp"
+#include "SolarSystem.cpp"
 
 
 int main()
@@ -19,7 +20,7 @@ int main()
     }
 
     // Create a new window
-    window = glfwCreateWindow(800, 600, "Hello", 0, 0);
+    window = glfwCreateWindow(800, 800, "Hello", 0, 0);
     // If Window creation fails then terminate the process and return.
     if (!window)
     {
@@ -33,18 +34,64 @@ int main()
     glfwMakeContextCurrent(window);
 
 	// Create a new CircleApproximation object.
-	CircleApproximation circleApproximation(0, 0, 1, 50);
+	//CircleApproximation circleApproximation(0, 0, 1, 50);
+
+    // Create a new SolarSystem object.
+	SolarSystem solarSystem(50);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+	glScalef(0.1f, 0.1f, 0.1f); // [-1, 1] --> [-10, 10] screen coordinates span.
+
+    float earthAngle = 0;
+    float moonAngle = 0;
 
     // Render loop
     while (!glfwWindowShouldClose(window))
     {
-        glClearColor(1, 1, 1, 1);
+        // The speed of rotation.
+        earthAngle += 1;
+
+        glClearColor(0, 0, 0, 0);
 
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT);
 
 		// Draw Circle
-		circleApproximation.DrawCircle();
+		//circleApproximation.DrawCircle();
+
+        // Draw Solar System.
+        // Draw Sun
+		solarSystem.DrawPlanet(1, 1, 0);
+        {
+			// Draw Earth
+            // We are constatnly updating our Y position, so it goes out of the screen.
+			// In order to fix that we stack the matrix and then pop it.
+			glPushMatrix(); // Use the Sun's matrix. Taking Sun as the center point of the matrix.
+
+			// Rotate around the Sun.
+			// We first rotate and then translate because we need to rotate first and then translate around the origin, i.e., the Sun.
+            glRotatef(earthAngle, 0, 0, 1); // Rotate around Z axis.
+
+			// Translate the Earth.
+            glTranslatef(0, 5, 0); // Move 5 units on Y axis.
+			glScalef(0.6, 0.6, 1); // Scale the Earth.
+
+			solarSystem.DrawPlanet(0, 0.3, 1);
+
+			// Draw Moon.
+            {
+				glPushMatrix(); //Push matrix one level down below.
+                glRotatef(moonAngle, 0, 0, 1);
+                glTranslatef(0, 3, 0);
+				glScalef(0.5, 0.5, 1);
+				solarSystem.DrawPlanet(0.5, 0.5, 0.5);
+				glPopMatrix(); // Now return to the one level up, that is the previous matrix.
+                moonAngle += 3;
+            }
+
+			glPopMatrix(); // Now return to the Original matrix, that is the ModelView Matrix.
+        }
 
         // Responsible for swapping the front and back buffers of a window.
         // Displays the fully rendered frame by swapping the front and back buffers.

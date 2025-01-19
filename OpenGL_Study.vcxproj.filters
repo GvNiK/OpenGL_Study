@@ -18,22 +18,14 @@
     <ClCompile Include="OpenGL_Study.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SolarSystem.cpp">
+    <ClCompile Include="GLFWSkeleton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CircleApproximation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Circle.cpp">
+    <ClCompile Include="SolarSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="SolarSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Circle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,42 +3,38 @@
 
 class SolarSystem
 {
-	public:
+public:
 	// Attributes (variables)
-	float xPos, yPos, radius;
-	int steps;
+	int steps = 50;
 
 	// Constructor to initialize the attributes
-	SolarSystem(float xPos, float yPos, float radius, int steps)
+	SolarSystem(int steps)
 	{
-		this->xPos = xPos;
-		this->yPos = yPos;
-		this->radius = radius;
 		this->steps = steps;
 	}
 
 	// Method (function) to display car details
-	void DrawSolarSystem()
+	void DrawPlanet(float red, float green, float blue)
 	{
-		// Area of a Circle / Number of Steps.
-		// 360 (in Degrees) / 10.
-		const float angle = 2 * 3.14 / steps;
-
-		float prevX = xPos;
-		float prevY = yPos;// -radius;
+		float radius = 1;
+		const float angle = 3.14 * 2 / steps;
+		float oldX = 0;
+		float oldY = 1;
 
 		for (int i = 0; i <= steps; i++)
 		{
 			float newX = radius * sin(angle * i);
-			float newY = radius * cos(angle * i);
+			float newY = -radius * cos(angle * i);
+
+			glColor3f(red, green, blue);
 			glBegin(GL_TRIANGLES);
-			glColor3f(0, 1, 0);
-			glVertex2f(prevX, prevY);
-			glVertex2f(newX, newY);
-			glVertex2f(xPos, yPos);
+			glVertex3f(0, 0, 0);	
+			glVertex3f(oldX, oldY, 0);
+			glVertex3f(newX, newY, 0);
 			glEnd();
-			prevX = newX;
-			prevY = newY;
+
+			oldX = newX;
+			oldY = newY;
 		}
 	}
 };
