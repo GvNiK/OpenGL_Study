@@ -6,3 +6,6 @@ Below is an example to create a circle using simple trigonometry and GLSL code, 
 ![OpenGL_Circle GIF](https://github.com/user-attachments/assets/e6d01273-23e5-403e-a060-012e3ec35b9d)
 
 
+A Solar System created using the concepts of Model-View Matrix to scale, translate and rotate objects correclty.
+
+![Image](https://github.com/user-attachments/assets/daf12e5b-a968-4447-97d9-8c56696a4fee)
